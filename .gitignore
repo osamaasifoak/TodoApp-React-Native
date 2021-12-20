@@ -29,9 +29,13 @@ build/
 local.properties
 *.iml
 *.hprof
+# Visual Studio Code
+#
+.vscode/
 
 # node.js
 #
+.git-git-lab
 node_modules/
 npm-debug.log
 yarn-error.log
