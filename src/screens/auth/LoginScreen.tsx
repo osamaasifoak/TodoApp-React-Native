@@ -8,6 +8,7 @@ import {
     Button,
     TouchableOpacity,
 } from "react-native";
+import { stringsConstants } from "../../constants/StringsConstants";
 import { styles } from "../../constants/StylesConstants";
 
 function LoginScreen() {
@@ -16,11 +17,11 @@ function LoginScreen() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>TODO APP</Text>
+            <Text style={styles.title}>{stringsConstants.appName}</Text>
             <View style={styles.inputView}>
                 <TextInput
                     style={styles.TextInput}
-                    placeholder="Email."
+                    placeholder={stringsConstants.email}
                     placeholderTextColor="#003f5c"
                     onChangeText={(email) => setEmail(email)}
                 />
@@ -29,7 +30,7 @@ function LoginScreen() {
             <View style={styles.inputView}>
                 <TextInput
                     style={styles.TextInput}
-                    placeholder="Password."
+                    placeholder={stringsConstants.password}
                     placeholderTextColor="#003f5c"
                     secureTextEntry={true}
                     onChangeText={(password) => setPassword(password)}
@@ -37,11 +38,11 @@ function LoginScreen() {
             </View>
 
             <TouchableOpacity style={styles.loginBtn}>
-                <Text style={styles.lgnTxt}>LOGIN</Text>
+                <Text style={styles.lgnTxt}>{stringsConstants.login}</Text>
             </TouchableOpacity>
 
             <TouchableOpacity >
-                <Text style={styles.forgot_button}>Forgot Password?</Text>
+                <Text style={styles.forgot_button}>{stringsConstants.forgotPassword}</Text>
             </TouchableOpacity>
 
         </View>

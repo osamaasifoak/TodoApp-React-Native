@@ -1,6 +1,7 @@
 import {
     StyleSheet,
 } from "react-native";
+import { colorConstants } from "./ColorConstants";
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -49,6 +50,6 @@ export const styles = StyleSheet.create({
         height: 50,
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#0e98e8",
+        backgroundColor: colorConstants.btnBackground,
     },
 });
