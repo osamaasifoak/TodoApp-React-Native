@@ -5,6 +5,6 @@ export enum RoutesEnum {
     Signin = 'Signin',
     Signup = 'Signup',
     Loading = 'Loading',
-    AddTodos = 'AddTodos',
+    Todos = 'Todos',
     Settings = 'Settings',
 }
