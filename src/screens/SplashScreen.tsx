@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { CommonActions, useNavigation } from "@react-navigation/native";
 import React, { useEffect } from "react";
 import { Text, View } from "react-native";
 import { stringsConstants } from "../constants/StringsConstants";
@@ -7,10 +7,18 @@ import { navigate } from "../routes/RootNavigation";
 import { RoutesEnum } from "../routes/RoutesEnum";
 import { AuthStackParamList } from "../routes/Types";
 function SplashScreen() {
-    const { navigate } = useNavigation();
+    const navigation = useNavigation();
+	const navigate = () => {
+		navigation.dispatch(
+			CommonActions.reset({
+				index: 0,
+				routes: [{ name: RoutesEnum.Signin }],
+			}),
+		);
+	};
     useEffect(() => {
         setTimeout(() => {
-            // navigate();
+            navigate();
         }, 1000)
     }, [])
     return (
