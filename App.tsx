@@ -27,21 +27,50 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import AppNavigator from './src/routes/AppNavigator';
 import SigninScreen from './src/screens/auth/SigninScreen';
-const App = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-  const dimension = Dimensions.get("window");
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <View style={{ height: dimension.height }}>
-        <SigninScreen />
-      </View>
-    </SafeAreaView>
-  );
-};
 
-export default App;
+
+export default class App extends React.Component {
+	constructor(props: any) {
+		super(props);
+		// registerCustomIconType("strapp", Icon);
+	}
+	render() {
+		return (
+			// <Provider store={store}>
+			// 	<ThemeProvider theme={AppTheme}>
+			// 		<AppProvider>
+			// 			<DeepLinkingProvider>
+			// 				<FirebaseProvider>
+			// 					<Host>
+									<AppNavigator />
+			// 						<GlobalBottomSheet />
+			// 					</Host>
+			// 				</FirebaseProvider>
+			// 			</DeepLinkingProvider>
+			// 		</AppProvider>
+			// 	</ThemeProvider>
+			// </Provider>
+		);
+	}
+}
+
+// const App = () => {
+//   const isDarkMode = useColorScheme() === 'dark';
+//   const backgroundStyle = {
+//     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+//   };
+//   const dimension = Dimensions.get("window");
+//   return (
+//     <AppNavigator />
+//     // <SafeAreaView style={backgroundStyle}>
+//     //   <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+//     //   <View style={{ height: dimension.height }}>
+//     //     <SigninScreen />
+//     //   </View>
+//     // </SafeAreaView>
+//   );
+// };
+
+// export default App;

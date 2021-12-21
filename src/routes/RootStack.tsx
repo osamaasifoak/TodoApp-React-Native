@@ -1,10 +1,13 @@
+import React from "react";
 import { createStackNavigator, CardStyleInterpolators, } from "@react-navigation/stack";
 import SigninScreen from "../screens/auth/SigninScreen";
-import { AuthStackParamList } from "./Types";
+import SignupScreen from "../screens/auth/SignupScreen";
+import { RoutesEnum } from "./RoutesEnum";
+import { RootStackParamList } from "./Types";
 
-const Stack = createStackNavigator<AuthStackParamList>();
+const Stack = createStackNavigator<RootStackParamList>();
 
-function AuthStack() {
+function RootStack() {
     return (
         <Stack.Navigator
             screenOptions={{
@@ -12,7 +15,7 @@ function AuthStack() {
             }}
         >
             <Stack.Screen
-                name="SIGN_IN"
+                name={RoutesEnum.AddTodos}
                 component={SigninScreen}
                 // name= "INTRO_LAST"
                 // component={LastScreen}
@@ -23,3 +26,5 @@ function AuthStack() {
         </Stack.Navigator>
     )
 }
+
+export default RootStack;
