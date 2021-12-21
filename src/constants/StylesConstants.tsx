@@ -5,7 +5,7 @@ import { colorConstants } from "./ColorConstants";
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#fff",
+        backgroundColor: colorConstants.white,
         alignItems: "center",
         justifyContent: "center",
     },
@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
     },
 
     inputView: {
-        backgroundColor: "#ced5d9",
+        backgroundColor: colorConstants.inputBackground,
         borderRadius: 10,
         width: "80%",
         height: 45,
@@ -29,8 +29,7 @@ export const styles = StyleSheet.create({
         marginLeft: 20,
     },
 
-    forgot_button: {
-        height: 30,
+    margingTop15: {
         marginTop: 15,
     },
     title: {
@@ -40,8 +39,13 @@ export const styles = StyleSheet.create({
     },
     lgnTxt: {
         fontSize: 18,
-        color: "#FFFFFF",
+        color: colorConstants.white,
         fontWeight: '600'
+    },
+    accSignInSignup:  {
+        fontWeight: '500',
+        textAlign: 'center',
+        lineHeight: 20
     },
 
     loginBtn: {

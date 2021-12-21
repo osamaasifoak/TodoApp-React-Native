@@ -27,7 +27,7 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import LoginScreen from './src/screens/auth/LoginScreen';
+import SigninScreen from './src/screens/auth/SigninScreen';
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
   const backgroundStyle = {
@@ -38,7 +38,7 @@ const App = () => {
     <SafeAreaView style={backgroundStyle}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <View style={{ height: dimension.height }}>
-        <LoginScreen />
+        <SigninScreen />
       </View>
     </SafeAreaView>
   );

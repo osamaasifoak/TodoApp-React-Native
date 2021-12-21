@@ -41,7 +41,7 @@ function LoginScreen() {
             </TouchableOpacity>
 
             <TouchableOpacity >
-                <Text style={styles.forgot_button}>Forgot Password?</Text>
+                <Text style={styles.margingTop15}>Forgot Password?</Text>
             </TouchableOpacity>
 
         </View>
