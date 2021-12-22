@@ -36,7 +36,7 @@ function SignupScreen() {
                 />
             </View>
 
-            <TouchableOpacity style={styles.loginBtn}>
+            <TouchableOpacity style={styles.btn}>
                 <Text style={styles.lgnTxt}>LOGIN</Text>
             </TouchableOpacity>
 

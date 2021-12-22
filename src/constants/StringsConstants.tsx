@@ -6,5 +6,8 @@ export const stringsConstants = {
     forgotPassword: 'Forgot Password?',
     signUpNow: "Don't have an account?\nSignup now.",
     login: 'Sign in',
-    signup: 'Sign up'
+    signup: 'Sign up',
+    todoList: 'TODOs List',
+    newTodo: 'Add new todo',
+    addTodo: 'Add TODO'
 }

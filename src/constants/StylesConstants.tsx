@@ -48,7 +48,7 @@ export const styles = StyleSheet.create({
         lineHeight: 20
     },
 
-    loginBtn: {
+    btn: {
         width: "80%",
         borderRadius: 10,
         height: 50,

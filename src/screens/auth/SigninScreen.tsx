@@ -60,7 +60,7 @@ function SigninScreen() {
                 />
             </View>
 
-            <TouchableOpacity style={styles.loginBtn} onPress={validateAndSubmitForm}>
+            <TouchableOpacity style={styles.btn} onPress={validateAndSubmitForm}>
                 <Text style={styles.lgnTxt}>{stringsConstants.login}</Text>
             </TouchableOpacity>
 

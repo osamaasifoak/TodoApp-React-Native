@@ -6,7 +6,7 @@ import { navigationRef } from "./RootNavigation";
 import RootStack from "./RootStack";
 import { RoutesEnum } from "./RoutesEnum";
 import auth from '@react-native-firebase/auth';
-import { Text, View } from "react-native";
+import { StatusBar, Text, View } from "react-native";
 const Stack = createStackNavigator();
 
 export default function AppNavigator() {
