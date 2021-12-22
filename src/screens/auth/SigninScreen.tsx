@@ -13,6 +13,7 @@ import { colorConstants } from "../../constants/ColorConstants";
 import { ErrorConstants } from "../../constants/ErrorConstants";
 import { stringsConstants } from "../../constants/StringsConstants";
 import { styles } from "../../constants/StylesConstants";
+import { CommonStatusWrapper } from "../../models/CommonStatusModel";
 import { AuthServices } from "../../services/AuthServices";
 
 function SigninScreen() {
@@ -32,7 +33,8 @@ function SigninScreen() {
             });
 
         } else {
-            await AuthServices.login(email, password)
+           await AuthServices.login(email, password)
+            
         }
     }
     return (

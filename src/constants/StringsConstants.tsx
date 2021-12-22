@@ -7,6 +7,7 @@ export const stringsConstants = {
     signUpNow: "Don't have an account?\nSignup now.",
     login: 'Sign in',
     signup: 'Sign up',
+    signout: 'Sign out',
     todoList: 'TODOs List',
     newTodo: 'Add new todo',
     addTodo: 'Add TODO',

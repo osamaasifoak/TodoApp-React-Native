@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, TextInput, TouchableOpacity } from "react-native-gesture-handler";
 import firestore from '@react-native-firebase/firestore';
-import { SafeAreaView } from "react-native-safe-area-context";
 import Snackbar from "react-native-snackbar";
-import { ErrorConstants } from "../../constants/ErrorConstants";
 import auth from '@react-native-firebase/auth';
-import { Button, StyleSheet, Text, View } from "react-native";
+import {  StyleSheet, Text, View } from "react-native";
 import { stringsConstants } from "../../constants/StringsConstants";
 import { colorConstants } from "../../constants/ColorConstants";
 import { styles } from "../../constants/StylesConstants";
-import { MyStatusBar } from "../../components/StatusBarComponent";
 import { MaterialIcon } from "../../components/IconsComponent";
 import { addTodo, deleteTodo, toggleComplete, updateTodoFir } from "../../services/TodoServices";
+import { AppbarComponent } from "../../components/AppbarComponent";
+import RadioGroup from 'react-native-radio-buttons-group';
+import { useFocusEffect } from "@react-navigation/native";
 
 export interface Todo {
     id: string,
@@ -28,41 +28,80 @@ function TodosScreen() {
     const [todo, setTodo] = useState('');
     const [todos, setTodos] = useState<Todo[]>();
     const userId = auth().currentUser?.uid;
-
+    const selectionTodoData = [{
+        id: '1',
+        label: 'My Todo',
+        value: 'MyTodo',
+        selected: true,
+    }, {
+        id: '2',
+        label: 'Public Todo',
+        value: 'PublicTodo',
+        selected: false,
+    }]
+    const [selectionTodo, setSelectionTodo] = useState(selectionTodoData)
+    function onPressRadioButton(radioButtonsArray: any) {
+        setSelectionTodo(radioButtonsArray);
+    }
 
     useEffect(() => {
-        return ref.onSnapshot(querySnapshot => {
-            const list: Todo[] = [];
-            if (querySnapshot)
-                querySnapshot.forEach(doc => {
-                    const { userId, title, complete } = doc.data();
-                    list.push({
-                        id: doc.id,
-                        userId,
-                        title,
-                        complete,
+        return fetchPublicTodo()
+    }, [])
+    useFocusEffect(
+        React.useCallback(() => {
+            fetchPublicTodo()
+            // StatusBar.setBackgroundColor(statusBarColor);
+            // StatusBar.setTranslucent(translucent);
+        }, [selectionTodo]),
+    );
+
+    function fetchPublicTodo(): any {
+        const selected = selectionTodo.find(x => x.selected == true)
+        if (selected?.id == "1") {
+            console.log(selected)
+            const query = ref.where('userId', "==", userId);
+            return query.onSnapshot(querySnapshot => {
+                const list: Todo[] = [];
+                if (querySnapshot)
+                    querySnapshot.forEach(doc => {
+                        const { userId, title, complete } = doc.data();
+                        list.push({
+                            id: doc.id,
+                            userId,
+                            title,
+                            complete,
+                        });
                     });
-                });
-            setTodos(list);
-            if (loading) {
-                setLoading(false);
-            }
-        });
-    }, []);
+                setTodos(list);
+                if (loading) {
+                    setLoading(false);
+                }
+            });
+        } else {
+            return ref.onSnapshot(querySnapshot => {
+                const list: Todo[] = [];
+                if (querySnapshot)
+                    querySnapshot.forEach(doc => {
+                        const { userId, title, complete } = doc.data();
+                        list.push({
+                            id: doc.id,
+                            userId,
+                            title,
+                            complete,
+                        });
+                    });
+                setTodos(list);
+                if (loading) {
+                    setLoading(false);
+                }
+            });
+        }
+    }
+
+
     return (
         <>
-            <MyStatusBar backgroundColor={colorConstants.primary} barStyle="light-content" />
-            <View style={{
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor: colorConstants.primary,
-                padding: 15,
-                marginBottom: 10
-            }}>
-                <Text style={{ fontSize: 20, fontWeight: "700", color: colorConstants.white }}>
-                    {stringsConstants.todoList}
-                </Text>
-            </View>
+            <AppbarComponent />
             <View style={[styles.inputView, { width: "95%", alignSelf: "center", flexDirection: "row", alignItems: "center" }]}>
                 <TextInput
                     style={styles.TextInput}
@@ -83,6 +122,12 @@ function TodosScreen() {
                         </TouchableOpacity> : null
                 }
             </View>
+            <RadioGroup
+                layout={"row"}
+                radioButtons={selectionTodo}
+                onPress={onPressRadioButton}
+            />
+
             <FlatList
                 style={{ flex: 1 }}
                 data={todos}
