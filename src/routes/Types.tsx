@@ -10,7 +10,7 @@ export type AuthStackParamList = {
 }
 
 export type RootStackParamList = {
-    [RoutesEnum.AddTodos]: undefined
+    [RoutesEnum.Todos]: undefined
 }
 
 

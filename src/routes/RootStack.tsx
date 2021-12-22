@@ -4,6 +4,7 @@ import SigninScreen from "../screens/auth/SigninScreen";
 import SignupScreen from "../screens/auth/SignupScreen";
 import { RoutesEnum } from "./RoutesEnum";
 import { RootStackParamList } from "./Types";
+import TodosScreen from "../screens/todos/TodosScreen";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -15,10 +16,8 @@ function RootStack() {
             }}
         >
             <Stack.Screen
-                name={RoutesEnum.AddTodos}
-                component={SigninScreen}
-                // name= "INTRO_LAST"
-                // component={LastScreen}
+                name={RoutesEnum.Todos}
+                component={TodosScreen}
                 options={{
                     headerShown: false,
                 }}
