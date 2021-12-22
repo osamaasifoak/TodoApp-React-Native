@@ -10,7 +10,7 @@ type IconSizeProps = {
 export interface IconProps {
   size: IconSizeProps['iconSizes'];
   name: string;
-  color: string;
+  color: any;
 }
 
 export const IconSizes = {

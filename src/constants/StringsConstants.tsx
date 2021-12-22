@@ -9,5 +9,6 @@ export const stringsConstants = {
     signup: 'Sign up',
     todoList: 'TODOs List',
     newTodo: 'Add new todo',
-    addTodo: 'Add TODO'
+    addTodo: 'Add TODO',
+    updateTodo: 'Update TODO'
 }

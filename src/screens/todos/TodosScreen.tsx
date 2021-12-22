@@ -11,42 +11,28 @@ import { colorConstants } from "../../constants/ColorConstants";
 import { styles } from "../../constants/StylesConstants";
 import { MyStatusBar } from "../../components/StatusBarComponent";
 import { MaterialIcon } from "../../components/IconsComponent";
-interface Todos {
+import { addTodo, deleteTodo, toggleComplete, updateTodoFir } from "../../services/TodoServices";
+
+export interface Todo {
     id: string,
     userId: string,
     title: string,
     complete: boolean
 }
 
-interface UpdateTodo {
-    id?: string,
-    title: string
-}
 
 function TodosScreen() {
     const ref = firestore().collection('todos');
     const [loading, setLoading] = useState(true);
+    const [updateTodo, setUpdateTodo] = useState<Todo | undefined>();
     const [todo, setTodo] = useState('');
-    const [todos, setTodos] = useState<Todos[]>();
+    const [todos, setTodos] = useState<Todo[]>();
     const userId = auth().currentUser?.uid;
-    async function addTodo() {
-        if (todo) {
-            await ref.add({
-                title: todo,
-                userId: userId,
-                complete: false,
-            });
-            setTodo('');
-        } else {
-            Snackbar.show({
-                text: "Todo " + ErrorConstants.emptyField,
-                duration: Snackbar.LENGTH_SHORT,
-            });
-        }
-    }
+
+
     useEffect(() => {
         return ref.onSnapshot(querySnapshot => {
-            const list: Todos[] = [];
+            const list: Todo[] = [];
             if (querySnapshot)
                 querySnapshot.forEach(doc => {
                     const { userId, title, complete } = doc.data();
@@ -77,12 +63,25 @@ function TodosScreen() {
                     {stringsConstants.todoList}
                 </Text>
             </View>
-            <View style={[styles.inputView, { width: "95%", alignSelf: "center" }]}>
+            <View style={[styles.inputView, { width: "95%", alignSelf: "center", flexDirection: "row", alignItems: "center" }]}>
                 <TextInput
                     style={styles.TextInput}
                     placeholder={stringsConstants.newTodo}
                     placeholderTextColor={colorConstants.placeHolderText}
-                    value={todo} onChangeText={setTodo} />
+                    value={(updateTodo != undefined) ? updateTodo.title : todo}
+                    onChangeText={(val) => {
+                        (updateTodo != undefined) ?
+                            setUpdateTodo({ ...updateTodo, title: val }) :
+                            setTodo(val)
+                    }}
+
+                />
+                {
+                    (updateTodo != undefined) ?
+                        <TouchableOpacity style={{ marginHorizontal: 10 }} onPress={() => setUpdateTodo(undefined)}>
+                            <MaterialIcon size="large" color="red" name="close" />
+                        </TouchableOpacity> : null
+                }
             </View>
             <FlatList
                 style={{ flex: 1 }}
@@ -91,46 +90,23 @@ function TodosScreen() {
                 renderItem={({ item }) => <Todo {...item} />}
             />
             <TouchableOpacity style={[styles.btn, localStyles.addTodoBtn]}
-                onPress={() => addTodo()}>
-                <Text style={styles.lgnTxt}>{stringsConstants.addTodo}</Text>
+                onPress={() => ((updateTodo != undefined) ? updateTodoFir(updateTodo, setUpdateTodo) : addTodo(todo, userId!, setTodo))}>
+                <Text style={styles.lgnTxt}>{(updateTodo != undefined) ? stringsConstants.updateTodo : stringsConstants.addTodo}</Text>
             </TouchableOpacity>
 
         </>
     );
-    function Todo(todo: Todos) {
-        async function toggleComplete() {
-            if (!todo.complete) {
-                await firestore()
-                    .collection('todos')
-                    .doc(todo.id)
-                    .update({
-                        complete: !todo.complete,
-                    });
-            }
-            else {
-                Snackbar.show({
-                    text: "Already mark completed",
-                    duration: Snackbar.LENGTH_SHORT,
-                });
-            }
-        }
-        async function deleteTodo() {
-            await firestore()
-                .collection('todos')
-                .doc(todo.id).delete();
-        }
+    function Todo(todo: Todo) {
         function showPersonTodoMessage() {
             Snackbar.show({
                 text: "This is a public todo",
                 duration: Snackbar.LENGTH_SHORT,
             });
         }
-
-
         return (
             <View style={localStyles.todoCard}>
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
-                    <TouchableOpacity onPress={todo.userId == userId ? toggleComplete : showPersonTodoMessage}>
+                    <TouchableOpacity onPress={todo.userId == userId ? () => toggleComplete(todo) : showPersonTodoMessage}>
                         <MaterialIcon size="large"
                             color={todo.complete ? "green" : "cancel"}
                             name={todo.userId == userId ? (todo.complete ? "check" : "cancel") : "account"} />
@@ -140,16 +116,17 @@ function TodosScreen() {
                         {todo.title}
                     </Text>
                 </View>
-                {todo.userId == userId ? <View style={{ flexDirection: "row", alignItems: "center" }}>
-                    <TouchableOpacity onPress={() => setTodo(todo.title)}>
-                        <MaterialIcon size="large" color="green" name="pencil" />
-                    </TouchableOpacity>
-                    <View style={{ width: 10 }} />
-                    <TouchableOpacity onPress={deleteTodo}>
-                        <MaterialIcon size="large" color="red" name="delete" />
-                    </TouchableOpacity>
-                </View> :
-                    null
+                {
+                    todo.userId == userId ? <View style={{ flexDirection: "row", alignItems: "center" }}>
+                        <TouchableOpacity onPress={() => setUpdateTodo(todo)}>
+                            <MaterialIcon size="large" color="green" name="pencil" />
+                        </TouchableOpacity>
+                        <View style={{ width: 10 }} />
+                        <TouchableOpacity onPress={() => deleteTodo(todo)}>
+                            <MaterialIcon size="large" color="red" name="delete" />
+                        </TouchableOpacity>
+                    </View> :
+                        null
                 }
             </View>
         );
