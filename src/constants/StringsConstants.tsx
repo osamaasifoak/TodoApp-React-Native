@@ -5,6 +5,7 @@ export const stringsConstants = {
     confirmPassword: 'Confirm password',
     forgotPassword: 'Forgot Password?',
     signUpNow: "Don't have an account?\nSignup now.",
+    signinNow: "Already have an account?\nSignin now.",
     login: 'Sign in',
     signup: 'Sign up',
     signout: 'Sign out',

@@ -1,3 +1,4 @@
+import { CommonActions, useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import {
     StyleSheet,
@@ -14,11 +15,22 @@ import { ErrorConstants } from "../../constants/ErrorConstants";
 import { stringsConstants } from "../../constants/StringsConstants";
 import { styles } from "../../constants/StylesConstants";
 import { CommonStatusWrapper } from "../../models/CommonStatusModel";
+import { RoutesEnum } from "../../routes/RoutesEnum";
 import { AuthServices } from "../../services/AuthServices";
+import SignupScreen from "./SignupScreen";
 
 function SigninScreen() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigation = useNavigation();
+    const navigate = () => {
+        navigation.dispatch(
+            CommonActions.reset({
+                index: 0,
+                routes: [{ name: RoutesEnum.Signup }],
+            }),
+        );
+    };
     const validateAndSubmitForm = async () => {
         if (email == "") {
             Snackbar.show({
@@ -33,8 +45,8 @@ function SigninScreen() {
             });
 
         } else {
-           await AuthServices.login(email, password)
-            
+            await AuthServices.login(email, password)
+
         }
     }
     return (
@@ -69,7 +81,7 @@ function SigninScreen() {
             <TouchableOpacity >
                 <Text style={styles.margingTop15}>{stringsConstants.forgotPassword}</Text>
             </TouchableOpacity>
-            <TouchableOpacity >
+            <TouchableOpacity onPress={navigate}>
                 <Text style={[styles.margingTop15, styles.accSignInSignup]}>
                     {stringsConstants.signUpNow}</Text>
             </TouchableOpacity>
